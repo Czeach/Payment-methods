@@ -4,8 +4,6 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.czech.payment_methods.model.PaymentMethods;
 
-import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
