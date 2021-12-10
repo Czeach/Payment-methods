@@ -1,36 +1,43 @@
 package com.czech.payment_methods.network;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.czech.payment_methods.model.PaymentMethods;
 
+import javax.inject.Inject;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import timber.log.Timber;
 
 public class Repository {
 
-    private ApiService apiService;
+    @Inject
+    ApiService apiService;
 
     public Repository(ApiService apiService) {
         this.apiService = apiService;
     }
 
-    public void getMethods(MutableLiveData<PaymentMethods> liveData) {
+    public void getMethods(MutableLiveData<PaymentMethods> request) {
         Call<PaymentMethods> call = apiService.Methods();
         call.enqueue(new Callback<PaymentMethods>() {
             @Override
-            public void onResponse(Call<PaymentMethods> call, Response<PaymentMethods> response) {
+            public void onResponse(@NonNull Call<PaymentMethods> call, @NonNull Response<PaymentMethods> response) {
                 if (response.isSuccessful()) {
-                    liveData.postValue(response.body());
+                    request.setValue(response.body());
+                    Timber.d(response.message());
+                    Timber.d(response.body().toString());
                 } else  {
-                    liveData.postValue(null);
+                    request.setValue(null);
                 }
             }
-
             @Override
-            public void onFailure(Call<PaymentMethods> call, Throwable t) {
-                liveData.postValue(null);
+            public void onFailure(@NonNull Call<PaymentMethods> call, @NonNull Throwable t) {
+                request.setValue(null);
+                Timber.d(t);
             }
         });
     }

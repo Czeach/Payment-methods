@@ -19,14 +19,16 @@ public class AppModule {
 
     @Provides
     @Singleton
+    public ApiService provideApiService(Retrofit retrofit) {
+        return retrofit.create(ApiService.class);
+    }
+
+    @Provides
+    @Singleton
     public Retrofit provideRetrofitInstance() {
         return new Retrofit.Builder()
                 .baseUrl(base_url)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-    }
-
-    public ApiService provideApiService(Retrofit retrofit) {
-        return retrofit.create(ApiService.class);
     }
 }
