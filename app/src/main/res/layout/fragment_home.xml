@@ -8,6 +8,7 @@
     tools:context=".ui.HomeFragment">
 
     <Button
+        android:id="@+id/to_payment_methods"
         android:layout_width="wrap_content"
         android:layout_height="64dp"
         android:textSize="16sp"
