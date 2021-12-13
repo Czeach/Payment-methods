@@ -32,6 +32,7 @@ public class Repository {
                     Timber.d(response.body().toString());
                 } else  {
                     request.setValue(null);
+                    Timber.d(response.errorBody().toString());
                 }
             }
             @Override

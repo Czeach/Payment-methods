@@ -1,4 +1,4 @@
-package com.czech.payment_methods;
+package com.czech.viewModel;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;

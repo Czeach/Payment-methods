@@ -1,5 +1,6 @@
 package com.czech.payment_methods.ui;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -7,12 +8,16 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-import com.czech.payment_methods.PaymentListViewModel;
+import com.czech.payment_methods.adapter.Adapter;
+import com.czech.viewModel.PaymentListViewModel;
 import com.czech.payment_methods.databinding.FragmentPaymentListBinding;
 import com.czech.payment_methods.model.PaymentMethods;
 
@@ -23,6 +28,7 @@ public class PaymentListFragment extends Fragment {
 
     FragmentPaymentListBinding binding;
     PaymentListViewModel viewModel;
+    Adapter adapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -38,14 +44,28 @@ public class PaymentListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        initRecyclerView();
+        observeViewModel();
+    }
+
+    void initRecyclerView() {
+        RecyclerView recyclerView = binding.paymentMethodsRecyclerView;
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
+        adapter = new Adapter();
+        recyclerView.setAdapter(adapter);
+    }
+
+    void observeViewModel() {
         viewModel.makeCall();
         viewModel.getResponse().observe(getViewLifecycleOwner(), new Observer<PaymentMethods>() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onChanged(PaymentMethods networks) {
                 if (networks != null) {
-                    binding.test.setText(networks.getNetworks().getApplicable().toString());
+                    adapter.setListItems(networks.getNetworks().getApplicable());
+                    adapter.notifyDataSetChanged();
                 } else  {
-                    binding.test.setText("Error somewhere");
+                    Toast.makeText(requireActivity(), "Error in getting data", Toast.LENGTH_LONG).show();
                 }
             }
         });
