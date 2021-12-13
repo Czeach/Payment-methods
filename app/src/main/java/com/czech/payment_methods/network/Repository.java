@@ -21,23 +21,23 @@ public class Repository {
         this.apiService = apiService;
     }
 
-    public void getMethods(MutableLiveData<PaymentMethods> request) {
+    public void getMethods(RepositoryCallback request) {
         Call<PaymentMethods> call = apiService.Methods();
         call.enqueue(new Callback<PaymentMethods>() {
             @Override
             public void onResponse(@NonNull Call<PaymentMethods> call, @NonNull Response<PaymentMethods> response) {
                 if (response.isSuccessful()) {
-                    request.setValue(response.body());
+                    request.onSuccess(response.body());
                     Timber.d(response.message());
                     Timber.d(response.body().toString());
                 } else  {
-                    request.setValue(null);
+                    request.onFailure(new Exception("Error fetching payment methods"));
                     Timber.d(response.errorBody().toString());
                 }
             }
             @Override
             public void onFailure(@NonNull Call<PaymentMethods> call, @NonNull Throwable t) {
-                request.setValue(null);
+                request.onFailure(t);
                 Timber.d(t);
             }
         });

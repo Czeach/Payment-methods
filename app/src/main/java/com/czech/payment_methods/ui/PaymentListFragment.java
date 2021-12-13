@@ -50,7 +50,6 @@ public class PaymentListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         progressBar = binding.progressBar;
-        progressBar.setVisibility(View.VISIBLE);
 
         initRecyclerView();
         observeViewModel();
@@ -79,6 +78,7 @@ public class PaymentListFragment extends Fragment {
     }
 
     void observeViewModel() {
+        progressBar.setVisibility(View.VISIBLE);
         viewModel.makeCall();
         viewModel.getResponse().observe(getViewLifecycleOwner(), new Observer<PaymentMethods>() {
             @SuppressLint("NotifyDataSetChanged")

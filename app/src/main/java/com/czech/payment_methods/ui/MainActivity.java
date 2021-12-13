@@ -1,8 +1,10 @@
-package com.czech.payment_methods;
+package com.czech.payment_methods.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.czech.payment_methods.R;
 
 import dagger.hilt.android.AndroidEntryPoint;
 

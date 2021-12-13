@@ -1,6 +1,7 @@
 package com.czech.payment_methods.di;
 
 import com.czech.payment_methods.network.ApiService;
+import com.czech.payment_methods.network.Repository;
 
 import javax.inject.Singleton;
 
@@ -30,5 +31,11 @@ public class AppModule {
                 .baseUrl(base_url)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+    }
+
+    @Provides
+    @Singleton
+    public Repository provideRepository(ApiService apiService)  {
+        return new Repository(apiService);
     }
 }

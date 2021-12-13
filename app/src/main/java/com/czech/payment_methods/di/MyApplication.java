@@ -1,4 +1,4 @@
-package com.czech.payment_methods;
+package com.czech.payment_methods.di;
 
 import android.app.Application;
 
