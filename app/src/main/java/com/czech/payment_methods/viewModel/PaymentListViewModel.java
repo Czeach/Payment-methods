@@ -1,14 +1,11 @@
-package com.czech.viewModel;
+package com.czech.payment_methods.viewModel;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.czech.payment_methods.model.PaymentMethods;
-import com.czech.payment_methods.network.ApiService;
 import com.czech.payment_methods.network.Repository;
 import com.czech.payment_methods.network.RepositoryCallback;
-
-import java.util.Timer;
 
 import javax.inject.Inject;
 
