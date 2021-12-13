@@ -16,7 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-import com.czech.payment_methods.adapter.PaymentMethodAdapter;
+
 import com.czech.payment_methods.viewModel.PaymentListViewModel;
 import com.czech.payment_methods.databinding.FragmentPaymentListBinding;
 import com.czech.payment_methods.model.PaymentMethods;

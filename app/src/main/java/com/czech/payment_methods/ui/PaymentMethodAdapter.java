@@ -1,6 +1,5 @@
-package com.czech.payment_methods.adapter;
+package com.czech.payment_methods.ui;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
