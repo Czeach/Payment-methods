@@ -16,7 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.czech.payment_methods.adapter.Adapter;
+import com.czech.payment_methods.adapter.PaymentMethodAdapter;
 import com.czech.viewModel.PaymentListViewModel;
 import com.czech.payment_methods.databinding.FragmentPaymentListBinding;
 import com.czech.payment_methods.model.PaymentMethods;
@@ -28,7 +28,7 @@ public class PaymentListFragment extends Fragment {
 
     FragmentPaymentListBinding binding;
     PaymentListViewModel viewModel;
-    Adapter adapter;
+    PaymentMethodAdapter paymentMethodAdapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -51,8 +51,8 @@ public class PaymentListFragment extends Fragment {
     void initRecyclerView() {
         RecyclerView recyclerView = binding.paymentMethodsRecyclerView;
         recyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
-        adapter = new Adapter();
-        recyclerView.setAdapter(adapter);
+        paymentMethodAdapter = new PaymentMethodAdapter();
+        recyclerView.setAdapter(paymentMethodAdapter);
     }
 
     void observeViewModel() {
@@ -62,8 +62,8 @@ public class PaymentListFragment extends Fragment {
             @Override
             public void onChanged(PaymentMethods networks) {
                 if (networks != null) {
-                    adapter.setListItems(networks.getNetworks().getApplicable());
-                    adapter.notifyDataSetChanged();
+                    paymentMethodAdapter.setListItems(networks.getNetworks().getApplicable());
+                    paymentMethodAdapter.notifyDataSetChanged();
                 } else  {
                     Toast.makeText(requireActivity(), "Error in getting data", Toast.LENGTH_LONG).show();
                 }

@@ -15,7 +15,7 @@ import com.czech.payment_methods.model.ApplicableItem;
 
 import java.util.List;
 
-public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
+public class PaymentMethodAdapter extends RecyclerView.Adapter<PaymentMethodAdapter.PaymentMethodViewHolder> {
 
     private List<ApplicableItem> listItems;
 
@@ -25,14 +25,14 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public PaymentMethodViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
-        return new ViewHolder(view);
+        return new PaymentMethodViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PaymentMethodViewHolder holder, int position) {
 
         holder.label.setText(listItems.get(position).getLabel());
         holder.method.setText(listItems.get(position).getMethod());
@@ -44,21 +44,17 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        if (listItems == null) {
-            return 0;
-        } else  {
-            return listItems.size();
-        }
+        return listItems.size();
 
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class PaymentMethodViewHolder extends RecyclerView.ViewHolder {
 
         ImageView logo;
         TextView label;
         TextView method;
 
-        public ViewHolder(View view) {
+        public PaymentMethodViewHolder(View view) {
             super(view);
 
             logo = view.findViewById(R.id.logo);
