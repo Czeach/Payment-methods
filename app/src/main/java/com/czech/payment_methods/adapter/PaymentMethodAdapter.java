@@ -1,5 +1,6 @@
 package com.czech.payment_methods.adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,11 +45,15 @@ public class PaymentMethodAdapter extends RecyclerView.Adapter<PaymentMethodAdap
 
     @Override
     public int getItemCount() {
-        return listItems.size();
+        if (listItems == null) {
+            return 0;
+        } else  {
+            return listItems.size();
+        }
 
     }
 
-    class PaymentMethodViewHolder extends RecyclerView.ViewHolder {
+    static class PaymentMethodViewHolder extends RecyclerView.ViewHolder {
 
         ImageView logo;
         TextView label;

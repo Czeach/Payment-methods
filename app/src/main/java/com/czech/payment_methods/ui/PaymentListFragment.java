@@ -2,7 +2,6 @@ package com.czech.payment_methods.ui;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -10,12 +9,10 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import com.czech.payment_methods.adapter.PaymentMethodAdapter;
 import com.czech.viewModel.PaymentListViewModel;
 import com.czech.payment_methods.databinding.FragmentPaymentListBinding;
