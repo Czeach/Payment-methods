@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,7 +18,6 @@ import android.widget.Toast;
 
 import com.czech.payment_methods.viewModel.PaymentListViewModel;
 import com.czech.payment_methods.databinding.FragmentPaymentListBinding;
-import com.czech.payment_methods.model.PaymentMethods;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -54,18 +52,15 @@ public class PaymentListFragment extends Fragment {
         initRecyclerView();
         observeViewModel();
 
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                recyclerView.setAdapter(null);
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            recyclerView.setAdapter(null);
 
-                progressBar.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.VISIBLE);
 
-                initRecyclerView();
-                observeViewModel();
+            initRecyclerView();
+            observeViewModel();
 
-                swipeRefreshLayout.setRefreshing(false);
-            }
+            swipeRefreshLayout.setRefreshing(false);
         });
     }
 
@@ -77,22 +72,19 @@ public class PaymentListFragment extends Fragment {
         recyclerView.setAdapter(paymentMethodAdapter);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     void observeViewModel() {
         progressBar.setVisibility(View.VISIBLE);
         viewModel.makeCall();
-        viewModel.getResponse().observe(getViewLifecycleOwner(), new Observer<PaymentMethods>() {
-            @SuppressLint("NotifyDataSetChanged")
-            @Override
-            public void onChanged(PaymentMethods networks) {
-                if (networks != null) {
-                    progressBar.setVisibility(View.GONE);
+        viewModel.getResponse().observe(getViewLifecycleOwner(), networks -> {
+            if (networks != null) {
+                progressBar.setVisibility(View.GONE);
 
-                    paymentMethodAdapter.setListItems(networks.getNetworks().getApplicable());
-                    paymentMethodAdapter.notifyDataSetChanged();
-                } else  {
-                    progressBar.setVisibility(View.GONE);
-                    Toast.makeText(requireActivity(), "Error in getting data", Toast.LENGTH_LONG).show();
-                }
+                paymentMethodAdapter.setListItems(networks.getNetworks().getApplicable());
+                paymentMethodAdapter.notifyDataSetChanged();
+            } else  {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(requireActivity(), "Error in getting data. Swipe down to refresh", Toast.LENGTH_LONG).show();
             }
         });
     }
